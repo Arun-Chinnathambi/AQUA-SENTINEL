@@ -1,0 +1,19 @@
+seed: 42
+image_size: 256
+batch_size: 4
+epochs: 35
+lr: 1.0e-4
+weight_decay: 0.0
+grad_clip: 1.0
+scheduler_factor: 0.5
+scheduler_patience: 3
+freeze_epochs: 10
+physics: true
+fp_head: true
+loss:
+  dice: 0.5
+  bce: 0.3
+  focal: 0.2
+  auxiliary: 0.3
+focal_alpha: 0.8
+focal_gamma: 2.0
