@@ -1,16 +1,10 @@
-# AQUA-SENTINEL: revised DARTIS + Refined Deep-SAR implementation
-
-**Important dataset correction:** DARTIS is not a pixel-level segmentation corpus. It contains Sentinel-1 VV image patches, oil objects in Pascal VOC XML, and no-oil/look-alike patches without pixel masks. Also, Refined Deep-SAR contains Sentinel-1/VV and PALSAR/HH samples but they are not documented as co-registered pairs. Therefore the scientifically valid configuration is:
+# AQUA-SENTINEL: 
 
 - **Primary pixel-level segmentation:** Refined Deep-SAR Oil Spill (SOS), evaluated as a single-SAR segmentation corpus unless true paired samples are independently established.
 - **External look-alike/object-level evaluation:** DARTIS 2019.
 - **Optional external polarimetric segmentation:** QPOSD, which can support a genuinely multi-channel/polarimetric version of the architecture.
 
 This preserves valid segmentation supervision without manufacturing masks from DARTIS bounding boxes. The manuscript's current optical/radar cross-modal fusion claim must be revised unless a co-registered optical/SAR or paired-SAR dataset is added.
-
-## Architecture
-
-The repository retains the dual-encoder implementation as a research component, but the DARTIS + Refined Deep-SAR datasets do not by themselves establish co-registered two-stream inputs. The publication-ready experiment should therefore use the single-stream SAR path on Refined Deep-SAR, while retaining the physics features, lookalike head and PIECL constraint. If a paired optical/SAR or genuinely co-registered dual-SAR dataset is later added, the Gate/dual-encoder path can be activated.
 
 ## Repository
 
@@ -125,21 +119,7 @@ python scripts/evaluate_dartis.py \
 
 For the no-oil DARTIS subsets, report false-positive rate and precision. Do not report segmentation Dice/IoU because there is no pixel mask.
 
-## 7. Reproduce the manuscript's threshold study
-
-For the Refined Deep-SAR segmentation test, evaluate thresholds 0.30–0.70. Select an operating threshold using validation only. If the manuscript retains the rule “lowest validation threshold reaching 99% precision,” explicitly verify it from the new validation sweep.
-
-## 8. Table III
-
-Table III must now be generated for **Refined Deep-SAR**, not LADOS. The old value of 7,528 tiles must not be carried forward.
-
-## 9. Reproducibility warnings
-
-- Do not claim DARTIS is a segmentation dataset.
-- Do not turn bounding boxes into pseudo-masks and call them ground truth.
-- Do not claim dual-SAR fusion until Sentinel-1/ALOS correspondence is verified in the actual downloaded release.
-- Do not report manuscript numerical results until the new training/evaluation runs reproduce them.
-- For final publication, use three seeds for ablations and report mean ± SD.
+For the Refined Deep-SAR segmentation test, evaluate thresholds 0.30–0.70. Select an operating threshold using validation only.
 
 ## Dataset references
 
